@@ -7,10 +7,10 @@ var bcrypt = require("bcryptjs");
 
 var connection = mysql.createConnection({
 
-   host: DBHOST,
-   user: DBUSER,
-   password: DBPASSWORD,
-   database: DB
+   host: process.env.DBHOST,
+   user: process.env.DBUSER,
+   password: process.env.DBPASSWORD,
+   database: process.env.DB
 
 });
 
@@ -25,6 +25,21 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(session({secret: "**Dennis is cool*??",resave:true,saveUninitialized:true}));
+
+connection.query("select * from user",function(err,res)
+{
+    if(err)
+    {
+        console.log("err",err);
+    }
+    else
+    {
+        console.log("results",res);
+    }
+});
+
+
+
 
 
 app.listen(port, () => {
